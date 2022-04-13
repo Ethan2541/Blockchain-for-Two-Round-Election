@@ -1,7 +1,5 @@
 # Project-LU2IN006
 
 To-do :
-  - Part 6 : Trees of blocks
+  - Add: Winner Calculation
   - Report
-  - Headers Directory ?
-  - Charts and Tests Directories ?
