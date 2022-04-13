@@ -13,7 +13,7 @@ Key *create_key() {
   Key *key = (Key *) malloc(sizeof(Key));
 
   if (key == NULL) {
-    fprintf(stderr, "Key Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: Key Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -65,7 +65,7 @@ char *key_to_str(Key *key) {
   char *str = (char *) malloc(256 * sizeof(char));
 
   if (str == NULL) {
-    fprintf(stderr, "char* Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: char* Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -80,7 +80,7 @@ Key *str_to_key(char *str) {
 
   // sscanf allows to read and store the values
   if (sscanf(str, "(%lx,%lx)", &(key->val), &(key->n)) != 2) {
-    fprintf(stderr, "Invalid Key Format\n");
+    fprintf(stderr, "%s; %s; l.%d: Invalid Key Format\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -99,7 +99,7 @@ Signature *init_signature(long *content, int size) {
   Signature *signature = (Signature *) malloc(sizeof(Signature));
 
   if (signature == NULL) {
-    fprintf(stderr, "Signature Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: Signature Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -193,7 +193,7 @@ Protected *init_protected(Key *pKey, char *mess, Signature *sgn) {
   Protected *protected = (Protected *) malloc(sizeof(Protected));
 
   if (protected == NULL) {
-    fprintf(stderr, "Protected Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: Protected Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -226,7 +226,7 @@ char *protected_to_str(Protected *pr) {
   char *str = (char *) malloc (256 * sizeof(char));
 
   if (str == NULL) {
-    fprintf(stderr, "char* Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: char* Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -274,7 +274,7 @@ Protected *str_to_protected(char *str) {
   char *sstr = (char *) malloc (256 * sizeof(char));
 
   if (mess == NULL || kstr == NULL || sstr == NULL) {
-    fprintf(stderr, "char* Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: char* Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -344,7 +344,7 @@ void generate_random_data(int nv, int nc) {
   FILE *f3 = fopen("declarations.txt", "w");
 
   if ((f1 == NULL) || (f2 == NULL) || (f3 == NULL)) {
-    fprintf(stderr, "Can't open file(s): keys.txt or candidates.txt or declarations.txt\n");
+    fprintf(stderr, "%s; %s; l.%d: Can't open file(s): keys.txt or candidates.txt or declarations.txt\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -355,7 +355,7 @@ void generate_random_data(int nv, int nc) {
   KArray *cartecit = (KArray *) malloc(nv * sizeof(KArray));
 
   if (cartecit == NULL) {
-    fprintf(stderr, "Carte* Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: KArray Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -372,7 +372,7 @@ void generate_random_data(int nv, int nc) {
 
   if (pKeytab == NULL) {
     free(cartecit);
-    fprintf(stderr, "Key** Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: Key Array Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 

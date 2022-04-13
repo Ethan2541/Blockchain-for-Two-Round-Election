@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
   fw1 = fopen("ModPowOutput.txt", "w");
 
   if (fw1 == NULL) {
-    fprintf(stderr, "Can't open file: ModPowOutput.txt\n");
+    fprintf(stderr, "%s; %s; l.%d: Can't open file: ModPowOutput.txt\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -103,8 +103,8 @@ int main(int argc, char **argv) {
 
 
   // Print the keys in hexadecimal
-  printf("Clé publique = (%lx, %lx)\n", s, n);
-  printf("Clé privée = (%lx, %lx)\n", u, n);
+  printf("Public Key = (%lx, %lx)\n", s, n);
+  printf("Private Key = (%lx, %lx)\n", u, n);
 
 
   // Encryption of an input

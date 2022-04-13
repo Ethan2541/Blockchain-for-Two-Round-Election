@@ -19,7 +19,7 @@ void print_block(char *filename, Block *b) {
   FILE *f = fopen(filename, "w");
 
   if (f == NULL) {
-    fprintf(stderr, "Can't open file: %s\n", filename);
+    fprintf(stderr, "%s; %s; l.%d: Can't open file: %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, filename);
     exit(EXIT_FAILURE);
   }
 
@@ -48,14 +48,14 @@ Block *read_block(char *filename) {
   FILE *f = fopen(filename, "r");
 
   if (f == NULL) {
-    fprintf(stderr, "Can't open file: %s\n", filename);
+    fprintf(stderr, "%s; %s; l.%d: Can't open file: %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, filename);
     exit(EXIT_FAILURE);
   }
 
   Block *b = (Block *) malloc(sizeof(Block));
 
   if (b == NULL) {
-    fprintf(stderr, "Block Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: Block Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -64,7 +64,7 @@ Block *read_block(char *filename) {
   unsigned char *previous_hash = (unsigned char *) malloc(256 * sizeof(unsigned char));
 
   if ((hash == NULL) || (previous_hash == NULL)) {
-    fprintf(stderr, "unsigned char* Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: unsigned char* Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -76,7 +76,7 @@ Block *read_block(char *filename) {
   // Reading the first line of the file
   if (fgets(buffer, 256, f) != NULL) {
     if (sscanf(buffer, "%s %s %s %d", author, hash, previous_hash, &(b->nonce)) != 4) {
-      fprintf(stderr, "Invalid Block Format\n");
+      fprintf(stderr, "%s; %s; l.%d: Invalid Block Format\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
       exit(EXIT_FAILURE);
     }
   }
@@ -88,7 +88,7 @@ Block *read_block(char *filename) {
   // Reading the other lines
   while (fgets(buffer, 256, f) != NULL) {
     if (sscanf(buffer, "%[^\n]", prstr) != 1) {
-      fprintf(stderr, "Invalid Block Format\n");
+      fprintf(stderr, "%s; %s; l.%d: Invalid Block Format\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
       exit(EXIT_FAILURE);
     }
 
@@ -127,7 +127,7 @@ char *block_to_str(Block *block) {
   char *str = (char *) malloc(65536 * sizeof(char));
 
   if (str == NULL) {
-    fprintf(stderr, "char* Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: char* Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -183,70 +183,135 @@ char *block_to_str(Block *block) {
 
 unsigned char *hash_SHA256(char *s) {
   unsigned char *d = SHA256(s, strlen(s), 0);
-  return d;
+  unsigned char tmp[8];
+
+
+  // Creating the returned string
+  unsigned char *str = (unsigned char *) malloc(256 * sizeof(unsigned char));
+
+  if (str == NULL) {
+    fprintf(stderr, "%s; %s; l.%d: unsigned char* Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
+    exit(EXIT_FAILURE);
+  }
+
+  str[0] = '\0';
+
+
+  // Adding every character of d to str with hexadecimal format
+  for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+    sprintf(tmp, "%02x", d[i]);
+    strcat(str, tmp);
+  }
+
+  return str;
 }
 
 
 
 void compute_proof_of_work(Block *B, int d) {
-  // The proof of work is the index of the first zero of the requested series
   B->nonce = 0;
-  char *str = block_to_str(B);
-  B->hash = strdup(hash_SHA256(str));
 
-  int indice = B->nonce;
-  int cpt = 0;
+  if (B->hash == NULL) {
+    char *str = block_to_str(B);
+    B->hash = hash_SHA256(str);
+    free(str);
+  }
 
 
-  // Scanning the hexadecimal hashed value in order to find 4d consecutive zeros
-  while (cpt < 4*d) {
-    if ((B->hash)[indice] == '\0') {
-      free(str);
-      return;
-    }
+  unsigned char tmp[256];
+  unsigned char nonce[128];
+  unsigned char t[256];
+  int cpt = 0, i = 0;
 
+
+  // Creating the substring "hash"."nonce" and hashing the substring
+  sprintf(nonce, "%d", B->nonce);
+  strcpy(tmp, B->hash);
+  strcat(tmp, nonce);
+  unsigned char *u = hash_SHA256(tmp);
+
+
+  // Scanning the hexadecimal hashed value in order to find d consecutive zeros
+  while (cpt < d) {
     // Incrementing the counter if a zero is found
-    if ((B->hash)[indice++] == '0') {
+    if (u[i++] == '0') {
       cpt++;
     }
 
-    // Else, the counter is reset, and "cpt" is added to B->nonce to keep browsing the hashed value
+    // Else, the counter is reset, B->nonce is incremented
     else {
-      B->nonce += cpt;
+      B->nonce++;
+      i = 0;
       cpt = 0;
+      free(u);
+      sprintf(nonce, "%d", B->nonce);
+      strcpy(tmp, B->hash);
+      strcat(tmp, nonce);
+      u = hash_SHA256(tmp);
     }
   }
-
-  free(str);
+  printf("Final substring: %d %s\n", B->nonce, u);
+  free(u);
 }
 
 
 
 int verify_block(Block *b, int d) {
-  int cpt = 0;
-  int indice = b->nonce;
+  unsigned char tmp[256];
+  unsigned char nonce[128];
+  int cpt = 0, i = 0;
 
   if (b->hash == NULL) {
     return 0;
   }
 
+  // Creating the substring "hash"."nonce" and hashing the substring
+  sprintf(nonce, "%d", b->nonce);
+  strcpy(tmp, b->hash);
+  strcat(tmp, nonce);
+  unsigned char *u = hash_SHA256(tmp);
 
-  // We have to check if u[B->nonce] = ... = u[B->nonce + 4*d - 1] = 0
-  while (cpt < 4*d) {
-    if ((b->hash)[indice] == '\0') {
-      return 0;
-    }
 
+  // We have to check if u[0] = ... = u[d - 1] = 0
+  while (cpt < d) {
     // If a zero is found, the counter rises by one
-    if ((b->hash)[indice++] == '0') {
+    if (u[i++] == '0') {
       cpt++;
     }
 
-    // If not, the proof of work is invalid
+    // Else, the proof of work is invalid
     else {
+      free(u);
       return 0;
     }
   }
 
+  free(u);
   return 1;
+}
+
+
+
+void delete_block(Block *b) {
+  if (b->hash != NULL) {
+    free(b->hash);
+  }
+
+  if (b->previous_hash != NULL) {
+    free(b->previous_hash);
+  }
+
+
+  // Freeing cells of b->votes without freeing their content
+  CellProtected *c = b->votes;
+  CellProtected *tmp;
+
+  while (c != NULL) {
+    tmp = c;
+    c = c->next;
+    free(tmp);
+  }
+
+  free(c);
+  free(b);
 }

@@ -11,7 +11,7 @@ CellKey *create_cell_key(Key *key) {
   CellKey *cell = (CellKey *) malloc(sizeof(CellKey));
 
   if (cell == NULL) {
-    fprintf(stderr, "PARTIE 3 - ERREUR ALLOCATION CREATE_CELL_KEY\n");
+    fprintf(stderr, "%s; %s; l.%d: CellKey Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -35,7 +35,7 @@ CellKey *read_public_keys(char *filename) {
   FILE *f = fopen(filename, "r");
 
   if (f == NULL) {
-    fprintf(stderr, "Can't open the file: %s\n", filename);
+    fprintf(stderr, "%s; %s; l.%d: Can't open the file: %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, filename);
     exit(EXIT_FAILURE);
   }
 
@@ -47,7 +47,7 @@ CellKey *read_public_keys(char *filename) {
   // Reading the file
   while (fgets(buffer, 256, f) != NULL) {
     if (sscanf(buffer, "%s", pKeystr) != 1) {
-      fprintf(stderr, "Invalid Key Format\n");
+      fprintf(stderr, "%s; %s; l.%d: Invalid Key Format\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
       exit(EXIT_FAILURE);
     }
 
@@ -65,7 +65,7 @@ void print_list_keys(char *filename, CellKey *LCK) {
   FILE *f = fopen(filename, "w");
 
   if (f == NULL) {
-    fprintf(stderr, "Can't open file: %s\n", filename);
+    fprintf(stderr, "%s; %s; l.%d: Can't open file: %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, filename);
     exit(EXIT_FAILURE);
   }
 
@@ -112,7 +112,7 @@ CellProtected *create_cell_protected(Protected *pr) {
   CellProtected *cell = (CellProtected *) malloc(sizeof(CellProtected));
 
   if (cell == NULL) {
-    fprintf(stderr, "PARTIE 3 - ERREUR ALLOCATION CREATE_CELL_PROTECTED\n");
+    fprintf(stderr, "%s; %s; l.%d: CellProtected Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -136,7 +136,7 @@ CellProtected *read_protected(char *filename) {
   FILE *f = fopen(filename, "r");
 
   if (f == NULL) {
-    fprintf(stderr, "PARTIE 3 - ERREUR OUVERTURE FICHIER READ_PUBLIC_KEYS\n");
+    fprintf(stderr, "%s; %s; l.%d: Can't open file: %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, filename);
     exit(EXIT_FAILURE);
   }
 
@@ -148,7 +148,7 @@ CellProtected *read_protected(char *filename) {
   // Reading the file
   while (fgets(buffer, 256, f) != NULL) {
     if (sscanf(buffer, "%[^\n]", prstr) != 1) {
-      fprintf(stderr, "Invalid Protected Format\n");
+      fprintf(stderr, "%s; %s; l.%d: Invalid Protected Format\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
       exit(EXIT_FAILURE);
     }
 
@@ -166,7 +166,7 @@ void print_list_protected(char *filename, CellProtected *LCP) {
   FILE *f = fopen(filename, "w");
 
   if (f == NULL) {
-    fprintf(stderr, "Can't open file: %s\n", filename);
+    fprintf(stderr, "%s; %s; l.%d: Can't open file: %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, filename);
     exit(EXIT_FAILURE);
   }
 

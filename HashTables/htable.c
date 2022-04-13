@@ -13,7 +13,7 @@ HashCell *create_hashcell(Key *key) {
   HashCell *hc = (HashCell *) malloc(sizeof(HashCell));
 
   if (hc == NULL) {
-    fprintf(stderr, "HashCell Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: HashCell Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -61,7 +61,7 @@ HashTable *create_hashtable(CellKey *keys, int size) {
   HashTable *ht = (HashTable *) malloc(sizeof(HashTable));
 
   if (ht == NULL) {
-    fprintf(stderr, "HashTable Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: HashTable Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -71,7 +71,7 @@ HashTable *create_hashtable(CellKey *keys, int size) {
   // Allocating the array of HashCells
   if ((ht->tab) == NULL) {
     free(ht);
-    fprintf(stderr, "HashTable->Tab Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: HashTable->Tab Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -95,7 +95,7 @@ HashTable *create_hashtable(CellKey *keys, int size) {
 
 
 void delete_hashtable(HashTable *t) {
-  // Deleting the hashcells without freeing the keys to prevent SegFault with the lists used during the creation
+  // Deleting the hashcells without freeing the keys to prevent SegFault while manipulating the lists used during the creation
   for (int i = 0; i < t->size; i++) {
     if ((t->tab)[i] != NULL) {
       free((t->tab)[i]);

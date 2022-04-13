@@ -239,7 +239,7 @@ long *encrypt(char *str, long s, long n) {
   long *tab = (long *) malloc(l * sizeof(long));
 
   if (tab == NULL) {
-    fprintf(stderr, "long* Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: long* Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -258,7 +258,7 @@ char *decrypt(long *crypted, int size, long u, long n) {
   char *str = (char *) malloc((size + 1) * sizeof(char));
 
   if (str == NULL) {
-    fprintf(stderr, "char* Allocation Error\n");
+    fprintf(stderr, "%s; %s; l.%d: char* Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
   }
 
   // Decryption of every long of the array

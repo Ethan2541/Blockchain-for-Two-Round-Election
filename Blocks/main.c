@@ -2,15 +2,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include "../CryptographyTools/cryptotools.h"
 #include "../ProtectedDeclarations/prdecl.h"
 #include "../Lists/list.h"
 #include "block.h"
 
-#define POW 1
-
 
 int main(int argc, char **argv) {
+  srand(time(NULL));
+  clock_t tI, tF;
+  double t1 = 0;
+
+
   // Testing SHA256
   const char *a = "Rosette code";
   unsigned char *d = SHA256(a, strlen(a), 0);
@@ -25,6 +29,7 @@ int main(int argc, char **argv) {
   // Block Creation
   Block *b = (Block *) malloc(sizeof(Block));
   b->author = create_key();
+  b->hash = NULL;
   b->previous_hash = NULL;
   b->votes = read_protected("../ProtectedDeclarations/declarations.txt");
 
@@ -48,19 +53,41 @@ int main(int argc, char **argv) {
 
   init_key(b->author, s, n);
 
+
   // Testing compute_proof_of_work and verify_block
-  compute_proof_of_work(b, POW);
-  printf("%d\n", verify_block(b, POW));
+  FILE *f = fopen("PoWOutput.txt", "w");
+
+  if (f == NULL) {
+    fprintf(stderr, "%s; %s; l.%d: Can't open file: PoWOutput.txt\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
+    exit(EXIT_FAILURE);
+  }
+
+  // Calculating the time spent for possible values of pow, while it is under a second
+  for (int pow = 0; t1 < 1.0; pow++) {
+    tI = clock();
+    compute_proof_of_work(b, pow);
+    tF = clock();
+
+    // Time spent
+    t1 = ((double) (tF - tI)) / CLOCKS_PER_SEC;
+    fprintf(f, "%d %f\n", pow, t1);
+
+    printf("Verify: %d %d\n\n", b->nonce, verify_block(b, pow));
+  }
+
+  fclose(f);
+
+
 
 
   // Testing Block Functions
-  print_block("blocks.txt", b);
-  Block *b2 = read_block("blocks.txt");
+  print_block("block.txt", b);
+  Block *b2 = read_block("block.txt");
 
   char *str = block_to_str(b);
   char *str2 = block_to_str(b2);
 
-  printf("Block 1 : %s\n", str);
+  printf("Block 1 : %s\n\n\n\n", str);
   printf("Block 2 : %s\n", str2);
 
 
