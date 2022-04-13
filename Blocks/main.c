@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "../CryptographyTools/cryptotools.h"
-#include "../ProtectedDeclarations/prdecl.h"
-#include "../Lists/list.h"
-#include "block.h"
+#include "../Headers/cryptotools.h"
+#include "../Headers/prdecl.h"
+#include "../Headers/list.h"
+#include "../Headers/block.h"
 
 
 int main(int argc, char **argv) {
@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   b->author = create_key();
   b->hash = NULL;
   b->previous_hash = NULL;
-  b->votes = read_protected("../ProtectedDeclarations/declarations.txt");
+  b->votes = read_protected("../Database/declarations.txt");
 
   // Key Generation
   long p = random_prime_number(3, 7, 5000);
@@ -55,10 +55,10 @@ int main(int argc, char **argv) {
 
 
   // Testing compute_proof_of_work and verify_block
-  FILE *f = fopen("PoWOutput.txt", "w");
+  FILE *f = fopen("../Charts/PoW/PoWOutput.txt", "w");
 
   if (f == NULL) {
-    fprintf(stderr, "%s; %s; l.%d: Can't open file: PoWOutput.txt\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
+    fprintf(stderr, "%s; %s; l.%d: Can't open file: ../Charts/PoW/PoWOutput.txt\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 
@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
 
 
   // Testing Block Functions
-  print_block("block.txt", b);
+  write_block("block.txt", b);
   Block *b2 = read_block("block.txt");
 
   char *str = block_to_str(b);

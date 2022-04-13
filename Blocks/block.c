@@ -2,15 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../CryptographyTools/cryptotools.h"
-#include "../ProtectedDeclarations/prdecl.h"
-#include "../Lists/list.h"
-#include "block.h"
+#include "../Headers/prdecl.h"
+#include "../Headers/list.h"
+#include "../Headers/block.h"
 
 
 /* Blocks Reading and Writing */
 
-void print_block(char *filename, Block *b) {
+void write_block(char *filename, Block *b) {
   if (b == NULL) {
     return;
   }
@@ -238,7 +237,7 @@ void compute_proof_of_work(Block *B, int d) {
       cpt++;
     }
 
-    // Else, the counter is reset, B->nonce is incremented
+    // Else, the counter is reset, B->nonce is incremented and a new substring is created
     else {
       B->nonce++;
       i = 0;

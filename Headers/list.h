@@ -35,6 +35,7 @@ CellProtected *read_protected(char *filename);
 void print_list_protected(char *filename, CellProtected *LCP);
 void delete_cell_protected(CellProtected *c);
 void delete_list_protected(CellProtected *list);
+void merge_list_protected(CellProtected **list1, CellProtected **list2);
 
 
 

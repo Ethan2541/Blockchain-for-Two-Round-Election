@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../CryptographyTools/cryptotools.h"
-#include "../ProtectedDeclarations/prdecl.h"
-#include "list.h"
+#include "../Headers/prdecl.h"
+#include "../Headers/list.h"
 
 
 /* CellKey Functions */
@@ -202,6 +201,28 @@ void delete_list_protected(CellProtected *list) {
     list = list->next;
     delete_cell_protected(tmp);
   }
+}
+
+
+
+void merge_list_protected(CellProtected **list1, CellProtected **list2) {
+  // First List is Empty
+  if (*list1 == NULL) {
+    *list1 = *list2;
+    // The Second List is then "destroyed" without freeing the memory
+    *list2 = NULL;
+  }
+
+
+  // Else, we go at the end of the first list and set the first element of the second list as the follower
+  CellProtected *c = *list1;
+
+  while (c->next != NULL) {
+    c = c->next;
+  }
+
+  c->next = *list2;
+  *list2 = NULL;
 }
 
 

@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../CryptographyTools/cryptotools.h"
-#include "../ProtectedDeclarations/prdecl.h"
-#include "../Lists/list.h"
-#include "htable.h"
+#include "../Headers/prdecl.h"
+#include "../Headers/list.h"
+#include "../Headers/htable.h"
 
 #define SIZEV 1000
 #define SIZEC 200
@@ -12,9 +11,9 @@
 int main(int argc, char **argv) {
 
   // Initialization
-  CellKey *voters = read_public_keys("../ProtectedDeclarations/keys.txt");
-  CellKey *candidates = read_public_keys("../ProtectedDeclarations/candidates.txt");
-  CellProtected *decl = read_protected("../ProtectedDeclarations/declarations.txt");
+  CellKey *voters = read_public_keys("../Database/keys.txt");
+  CellKey *candidates = read_public_keys("../Database/candidates.txt");
+  CellProtected *decl = read_protected("../Database/declarations.txt");
 
   delete_false_protected(&decl);
 

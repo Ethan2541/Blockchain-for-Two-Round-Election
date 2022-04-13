@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "../CryptographyTools/cryptotools.h"
-#include "prdecl.h"
+#include "../Headers/cryptotools.h"
+#include "../Headers/prdecl.h"
 
 
 void print_long_vector (long *result, int size) {

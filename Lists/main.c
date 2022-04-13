@@ -2,28 +2,27 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "../CryptographyTools/cryptotools.h"
-#include "../ProtectedDeclarations/prdecl.h"
-#include "list.h"
+#include "../Headers/prdecl.h"
+#include "../Headers/list.h"
 
 int main(int argc, char **argv) {
   srand(time(NULL));
 
   // Testing the structures and the functions
-  CellKey *keyList = read_public_keys("../ProtectedDeclarations/keys.txt");
-  print_list_keys("TestKeys", keyList);
+  CellKey *keyList = read_public_keys("../Database/keys.txt");
+  print_list_keys("Tests/TestKeys", keyList);
   delete_list_keys(keyList);
   printf("\n");
 
-  CellProtected *prList = read_protected("../ProtectedDeclarations/declarations.txt");
-  print_list_protected("TestProtected", prList);
+  CellProtected *prList = read_protected("../Database/declarations.txt");
+  print_list_protected("Tests/TestProtected", prList);
   delete_list_protected(prList);
   printf("\n");
 
 
   // Testing delete_false_protected
   int p = rand() % 10;
-  CellProtected *prList2 = read_protected("../ProtectedDeclarations/declarations.txt");
+  CellProtected *prList2 = read_protected("../Database/declarations.txt");
   CellProtected *cell = prList2;
 
   while ((cell != NULL) && p != 0) {
@@ -37,6 +36,6 @@ int main(int argc, char **argv) {
 
   // Cleaning the list
   delete_false_protected(&prList2);
-  print_list_protected("TestDFP", prList2);
+  print_list_protected("Tests/TestDFP", prList2);
   delete_list_protected(prList2);
 }

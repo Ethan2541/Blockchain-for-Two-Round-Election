@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "cryptotools.h"
+#include "../Headers/cryptotools.h"
 
 #define A 10
 #define N 10
@@ -51,10 +51,10 @@ int main(int argc, char **argv) {
   /* modpow tests */
 
   FILE *fw1;
-  fw1 = fopen("ModPowOutput.txt", "w");
+  fw1 = fopen("../Charts/ModPow/ModPowOutput.txt", "w");
 
   if (fw1 == NULL) {
-    fprintf(stderr, "%s; %s; l.%d: Can't open file: ModPowOutput.txt\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
+    fprintf(stderr, "%s; %s; l.%d: Can't open file: ../Charts/ModPow/ModPowOutput.txt\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 

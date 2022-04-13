@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../CryptographyTools/cryptotools.h"
-#include "prdecl.h"
+#include "../Headers/cryptotools.h"
+#include "../Headers/prdecl.h"
 
 
 /* Keys Manipulation */
@@ -339,12 +339,12 @@ void generate_random_data(int nv, int nc) {
     return;
   }
 
-  FILE *f1 = fopen("keys.txt", "w");
-  FILE *f2 = fopen("candidates.txt", "w");
-  FILE *f3 = fopen("declarations.txt", "w");
+  FILE *f1 = fopen("../Database/keys.txt", "w");
+  FILE *f2 = fopen("../Database/candidates.txt", "w");
+  FILE *f3 = fopen("../Database/declarations.txt", "w");
 
   if ((f1 == NULL) || (f2 == NULL) || (f3 == NULL)) {
-    fprintf(stderr, "%s; %s; l.%d: Can't open file(s): keys.txt or candidates.txt or declarations.txt\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
+    fprintf(stderr, "%s; %s; l.%d: Can't open file(s): ../Database/keys.txt or ../Database/candidates.txt or ../Database/declarations.txt\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
     exit(EXIT_FAILURE);
   }
 

@@ -1,10 +1,9 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../CryptographyTools/cryptotools.h"
-#include "../ProtectedDeclarations/prdecl.h"
-#include "../Lists/list.h"
-#include "htable.h"
+#include "../Headers/prdecl.h"
+#include "../Headers/list.h"
+#include "../Headers/htable.h"
 
 
 /* Functions to interact with the hashtable */

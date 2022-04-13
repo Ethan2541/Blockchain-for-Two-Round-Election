@@ -15,7 +15,7 @@ typedef struct _block {
 
 /* Blocks Reading and Writing */
 
-void print_block(char *filename, Block *b);
+void write_block(char *filename, Block *b);
 Block *read_block(char *filename);
 void free_block(Block *b);
 

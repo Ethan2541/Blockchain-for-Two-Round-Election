@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "cryptotools.h"
+#include "../Headers/cryptotools.h"
 
 
 /* Naive Primality */
