@@ -1,4 +1,4 @@
-all: CryptographyTools/main ProtectedDeclarations/main Lists/main HashTables/main Blocks/main
+all: CryptographyTools/main ProtectedDeclarations/main Lists/main HashTables/main Blocks/main Trees/main
 
 
 
@@ -56,6 +56,17 @@ Blocks/main: Blocks/block.o Blocks/main.o
 	gcc -o Blocks/main CryptographyTools/cryptotools.o ProtectedDeclarations/prdecl.o Lists/list.o Blocks/block.o Blocks/main.o -lssl -lcrypto
 
 
+
+Trees/block.o: Headers/prdecl.h Headers/list.h Headers/htable.h Headers/block.h Headers/tree.h Trees/tree.c
+	gcc -g -o Trees/tree.o -c Trees/tree.c
+
+Trees/main.o: Headers/prdecl.h Headers/list.h Headers/htable.h Headers/block.h Headers/tree.h Trees/main.c
+	gcc -g -o Trees/main.o -c Trees/main.c
+
+Trees/main: Trees/block.o Trees/main.o
+	gcc -o Trees/main CryptographyTools/cryptotools.o ProtectedDeclarations/prdecl.o Lists/list.o HashTables/htable.o Blocks/block.o Trees/tree.o Trees/main.o -lm -lssl -lcrypto
+
+	
 
 clean:
 	rm -f CryptographyTools/*.o ProtectedDeclarations/*.o Lists/*.o HashTables/*.o Blocks/*.o CryptographyTools/main ProtectedDeclarations/main Lists/main HashTables/main Blocks/main

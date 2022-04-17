@@ -184,7 +184,7 @@ void free_signature(Signature *sgn) {
 
 
 
-/* Déclarations Signées */
+/* Protected Declarations */
 
 Protected *init_protected(Key *pKey, char *mess, Signature *sgn) {
   // Ensure that the values given are properly initialized
@@ -349,7 +349,7 @@ void generate_random_data(int nv, int nc) {
   }
 
 
-  /* A Structure "Carte" is prepared in order to list every Key Couple and check
+  /* A Structure "KArray" is prepared in order to list every Key Couple and check
   whether they have been selected as candidated thanks to an int */
 
   KArray *cartecit = (KArray *) malloc(nv * sizeof(KArray));

@@ -13,6 +13,7 @@ typedef struct block_tree_cell {
 } CellTree;
 
 
+
 /* Tree Manipulation */
 
 CellTree *create_node(Block *b);
@@ -22,17 +23,22 @@ void print_tree_rec(FILE *f, CellTree *node);
 void print_tree(char *filename, CellTree *tree);
 void delete_node(CellTree *node);
 void delete_tree(CellTree *tree);
+void free_node(CellTree *node);
+void free_tree(CellTree *tree);
+
 
 
 /* Find Last Block */
 
 CellTree *highest_child(CellTree *cell);
-CellTree *last_child(CellTree *tree);
+CellTree *last_node(CellTree *tree);
+
 
 
 /* Extract Protected */
 
 CellProtected *longest_chain_protected(CellTree *tree);
+
 
 
 /* Votes and Valid Blocks Creation */
@@ -42,10 +48,11 @@ void create_block(CellTree *tree, Key *author, int d);
 void add_block(int d, char *name);
 
 
+
 /* Tree Reading and Winner Calculation */
 
 CellTree *read_tree();
-Key *computre_winner_BT(CellTree *tree, CellKey *candidates, CellKey *voters, int sizeC, int sizeV);
+Key *compute_winner_BT(CellTree *tree, CellKey *candidates, CellKey *voters, int sizeC, int sizeV);
 
 
 #endif

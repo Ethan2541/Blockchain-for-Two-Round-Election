@@ -82,7 +82,17 @@ Block *read_block(char *filename) {
 
   b->author = str_to_key(author);
   b->hash = hash;
-  b->previous_hash = previous_hash;
+
+  // If the previous hash doesn't exist -> NULL
+  if (strcmp(previous_hash, "(null)") == 0) {
+    b->previous_hash = NULL;
+    free(previous_hash);
+  }
+
+  else {
+    b->previous_hash = previous_hash;
+  }
+
 
   // Reading the other lines
   while (fgets(buffer, 256, f) != NULL) {
@@ -97,6 +107,7 @@ Block *read_block(char *filename) {
 
   b->votes = list;
   fclose(f);
+
   return b;
 }
 
@@ -123,7 +134,7 @@ void free_block(Block *b) {
 /* Valid Blocks Creation */
 
 char *block_to_str(Block *block) {
-  char *str = (char *) malloc(65536 * sizeof(char));
+  char *str = (char *) malloc(1048576 * sizeof(char));
 
   if (str == NULL) {
     fprintf(stderr, "%s; %s; l.%d: char* Allocation Error\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
@@ -311,6 +322,5 @@ void delete_block(Block *b) {
     free(tmp);
   }
 
-  free(c);
   free(b);
 }

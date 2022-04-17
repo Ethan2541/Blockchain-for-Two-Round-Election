@@ -9,6 +9,12 @@
 #define SIZEC 200
 
 int main(int argc, char **argv) {
+  srand(time(NULL));
+
+
+  // Data Generation
+  generate_random_data(500, 20);
+
 
   // Initialization
   CellKey *voters = read_public_keys("../Database/keys.txt");
