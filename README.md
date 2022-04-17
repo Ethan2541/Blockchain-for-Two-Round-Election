@@ -2,12 +2,12 @@
 
 ## Goal
 
-Blockchain Application : Two-Round election with single-member constituencies as part of an end-of-term assignment at Sorbonne Université.
+Blockchain Application : Two-Round election with single-member constituencies as part of an end-of-term assignment at Sorbonne Université. <br/>
 
 
 ## Motive
 
-Lower abstention rate by allowing people to vote in a secure and transparent way.
+Lower abstention rate by allowing people to vote in a secure and transparent way. <br/>
 
 
 ## Compilation
