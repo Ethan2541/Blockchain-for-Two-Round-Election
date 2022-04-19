@@ -236,7 +236,7 @@ void delete_false_protected(CellProtected **list) {
 
 
   // Checking the first cell and the following "first" cells if deleted
-  while ((verify((*list)->data) == 0) && (*list != NULL)) {
+  while ((*list != NULL) && (verify((*list)->data) == 0)) {
     tmp = *list;
     *list = (*list)->next;
     delete_cell_protected(tmp);
