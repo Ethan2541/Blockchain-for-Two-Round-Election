@@ -30,7 +30,6 @@ int main(int argc, char **argv) {
   // Submitting all Votes
   CellTree *tree = NULL, *tmp;
   CellProtected *pr = decl;
-  CellKey *author = voters;
 
   char name[256];
   char name2[256];
@@ -56,7 +55,8 @@ int main(int argc, char **argv) {
       strcat(name2, n);
       strcat(name2, ext);
 
-      create_block(tree, author->data, POW);
+      // Creating a text file with the block's data inside it
+      create_block(tree, pr->pKey, POW);
       add_block(POW, name2);
 
 
@@ -77,7 +77,6 @@ int main(int argc, char **argv) {
     }
 
     cpt++;
-    author = author->next;
     pr = pr->next;
   }
 
