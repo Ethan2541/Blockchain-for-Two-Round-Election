@@ -12,12 +12,10 @@ int main(int argc, char **argv) {
   CellKey *keyList = read_public_keys("../Database/keys.txt");
   print_list_keys("Tests/TestKeys", keyList);
   delete_list_keys(keyList);
-  printf("\n");
 
   CellProtected *prList = read_protected("../Database/declarations.txt");
   print_list_protected("Tests/TestProtected", prList);
   delete_list_protected(prList);
-  printf("\n");
 
 
   // Testing delete_false_protected
