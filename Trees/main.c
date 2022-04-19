@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "../Headers/cryptotools.h"
 #include "../Headers/prdecl.h"
 #include "../Headers/list.h"
 #include "../Headers/htable.h"
@@ -30,6 +31,7 @@ int main(int argc, char **argv) {
   // Submitting all Votes
   CellTree *tree = NULL, *tmp;
   CellProtected *pr = decl;
+  CellKey *author = voters;
 
   char name[256];
   char name2[256];
@@ -55,8 +57,7 @@ int main(int argc, char **argv) {
       strcat(name2, n);
       strcat(name2, ext);
 
-      // Creating a text file with the block's data inside it
-      create_block(tree, pr->pKey, POW);
+      create_block(tree, author->data, POW);
       add_block(POW, name2);
 
 
@@ -77,6 +78,7 @@ int main(int argc, char **argv) {
     }
 
     cpt++;
+    author = author->next;
     pr = pr->next;
   }
 

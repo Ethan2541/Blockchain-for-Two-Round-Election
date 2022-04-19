@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "../Headers/prdecl.h"
 #include "../Headers/list.h"
 #include "../Headers/htable.h"
@@ -44,7 +45,7 @@ int main(int argc, char **argv) {
     c = c->next;
   }
 
-  printf("%d\n", cpt);
+  printf("Collisions: %d\n", cpt);
   delete_hashtable(t);
 
 
