@@ -1,4 +1,4 @@
-# Project-LU2IN006
+# Blockchain applied to a Two-Round Election
 
 ## Goal
 
