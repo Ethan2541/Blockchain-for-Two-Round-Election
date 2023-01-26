@@ -1,4 +1,4 @@
-# Blockchain applied to a Two-Round Election
+# Blockchain for Two-Round Election
 
 ## Goal
 
