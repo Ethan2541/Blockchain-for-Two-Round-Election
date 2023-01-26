@@ -2,7 +2,7 @@
 
 ## Goal
 
-Blockchain Application : Two-Round election with single-member constituencies as part of an end-of-term assignment of the LU2IN006 course at _Sorbonne Université_.
+Blockchain Application : Two-Round election with single-member constituencies as part of an end-of-term assignment for the `LU2IN006` course at _Sorbonne Université_.
 
 
 ## Motive
